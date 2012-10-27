@@ -10,6 +10,26 @@ you spot any mistakes.
 * Support OLD\_PASSWORD() accounts like 0.9.x did. You should still upgrade any
   user accounts in your your MySQL user table that has short (16 byte) Password
   values. Connecting to those accounts is not secure. (#204)
+
+As follows:
+
+```js
+var mysql = require('mysql');
+
+var client = mysql.createClient({
+  user: 'me',
+  password: 'password',
+});
+
+client.useDatabase('database_name');
+
+var clientes = client.query('select * from table_name', function (err, results, fields) {
+  console.log(results);
+});
+
+client.end();
+```
+
 * Ignore function values when escaping objects, allows to use RowDataPacket
   objects as query arguments. (Alex Gorbatchev, #213)
 * Handle initial error packets from server such as `ER_HOST_NOT_PRIVILEGED`.
